@@ -1,0 +1,15 @@
+
+networks:
+  app:
+    driver: bridge
+
+services:
+  authservice_back:
+    image: ignaxa/business_process_service:latest
+    container_name: business_process_service
+    build:
+      context: business-process-service
+    networks:
+      app:
+    ports:
+      - "8081:8081"
