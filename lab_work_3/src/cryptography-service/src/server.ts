@@ -1,3 +1,4 @@
+// @ts-ignore
 import express, {Express} from "express";
 
 const apiPrefix: string = "/api/cryptography";
