@@ -25,7 +25,46 @@
 
 # Применение основных принципов разработки
 
+```typescript
 
+export abstract class WayFilterComparator {
+    private readonly wayDataComparatorDispatcher: WayDataComparatorDispatcher;
+
+    public filterItems = async (items: Set<WfWayItem>, 
+                                columnIdent: string, 
+                                args: Array<string>, 
+                                rsqlOperation: RsqlSearchOperation): Promise<Set<WfWayItem>> => {
+        const wayDataComparator: WayDataComparator = 
+            this.wayDataComparatorDispatcher.getColumn(columnIdent);
+
+        if (wayDataComparator === null) {
+            return new Set<WfWayItem>(items);
+        }
+
+        const filteredItems: Set<WfWayItem> = new Set();
+
+        items.forEach((item: WfWayItem) => {
+            const whetherToAdd: boolean = this.filterItem(wayDataComparator, 
+                                                          item, 
+                                                          args, 
+                                                          rsqlOperation);
+
+            if (whetherToAdd) {
+                filteredItems.add(item);
+            }
+        });
+
+        return filteredItems;
+    }
+
+    public abstract supportsRsqlOperation(rsqlOperation: RsqlOperation): boolean;
+
+    protected abstract filterItem(wayDataComparator: WayDataComparator, 
+                                  item: WfWayItem, 
+                                  args: Array<string>, 
+                                  rsqlOperation: RsqlSearchOperation): boolean;
+}
+```
 
 # Дополнительные принципы разработки
 
