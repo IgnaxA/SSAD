@@ -23,10 +23,8 @@ jobs:
           cd ./lab_work_5/src/cryptography-service  
           npm i
           npm run build
-          npm run prod
       - name: Build File Storage Service
         run: |
           cd ./lab_work_5/src/file-storage-service
           npm i
           npm run build
-          npm run prod
