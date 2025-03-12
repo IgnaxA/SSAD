@@ -12,7 +12,7 @@ export class RestHashController implements HashController {
     public get256BitHash = async (req: Request, res: Response): Promise<void> => {
         const body: RestHashRequest = this.parseReqBody(req);
 
-        const hash: string = await this.hashEvaluatorDispatcher.getHashEvaluator(body.ident)
+        const hash: string = await this.hashEvaluatorDispatcher.getHashEvaluator(body.algorithm)
             .get256BitHash(body.data);
 
         res.status(200)
@@ -24,7 +24,7 @@ export class RestHashController implements HashController {
     public get512BitHash = async (req: Request, res: Response): Promise<void> => {
         const body: RestHashRequest = this.parseReqBody(req);
 
-        const hash: string = await this.hashEvaluatorDispatcher.getHashEvaluator(body.ident)
+        const hash: string = await this.hashEvaluatorDispatcher.getHashEvaluator(body.algorithm)
             .get512BitHash(body.data);
 
         res.status(200)
@@ -39,6 +39,6 @@ export class RestHashController implements HashController {
 }
 
 interface RestHashRequest {
-    ident: string;
+    algorithm: string;
     data: object;
 }

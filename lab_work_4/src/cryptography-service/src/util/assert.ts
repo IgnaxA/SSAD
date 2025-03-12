@@ -1,41 +1,32 @@
+import {AssertionFailedError} from "../error/hash/assertion-failed-error";
 
 export class Assert {
     public static notNull(obj: any, msg: string): void {
         if (obj === null) {
-            throw new Error(msg);
+            throw new AssertionFailedError(msg);
         }
     }
 
     public static notNullOrUndefined(obj: any, msg: string): void {
         if (obj === null || obj === undefined) {
-            throw new Error(msg);
+            throw new AssertionFailedError(msg);
         }
     }
 
     public static isBoolean(obj: any): void {
         if (!(obj instanceof Boolean)) {
-            throw new Error("Object is not a bool");
+            throw new AssertionFailedError("Object is not a bool");
         }
     }
     public static isString(obj: any): void {
         if (!(obj instanceof String)) {
-            throw new Error("Object is not a string");
+            throw new AssertionFailedError("Object is not a string");
         }
     }
 
     public static isNumber(obj: any): void {
         if (Number.isNaN(obj)) {
-            throw new Error("Object is not a number");
-        }
-    }
-
-    public static isError(obj: any): void {
-        if (obj === null) {
-            return;
-        }
-
-        if (!(obj instanceof Error)) {
-            throw new Error("Error occurred while parsing error");
+            throw new AssertionFailedError("Object is not a number");
         }
     }
 }

@@ -1,5 +1,6 @@
 import {HashEvaluatorDispatcher} from "../hash-evaluator-dispatcher";
 import {HashEvaluator} from "../../hash-evaluator";
+import {HashEvaluatorNotFoundError} from "../../../../error/hash/hash-evaluator-not-found-error";
 
 
 export class DefaultHashEvaluatorDispatcher implements HashEvaluatorDispatcher {
@@ -15,7 +16,7 @@ export class DefaultHashEvaluatorDispatcher implements HashEvaluatorDispatcher {
         const hashEvaluator: HashEvaluator | undefined = this.hashEvaluators.get(ident);
 
         if (hashEvaluator === undefined) {
-            throw new Error("Cannot find hashEvaluator with ident " + ident);
+            throw new HashEvaluatorNotFoundError("Cannot find hashEvaluator with ident " + ident);
         }
 
         return hashEvaluator;

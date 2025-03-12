@@ -1,8 +1,8 @@
 import {ParseHelper} from "../util/parse-helper";
 
 export class StartUpConfig {
-    private port: number;
-    private isProd: boolean;
+    private port: number = -1;
+    private isProd: boolean = false;
 
     public setPort(port: number): void {
         this.port = port;
