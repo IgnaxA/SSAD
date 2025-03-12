@@ -39,7 +39,7 @@ jobs:
       - name: Login to DockerHub
         run: |
           cd ./lab_work_5/src
-          echo docker login -u "{{ secrets.DOCKERHUB_LOGIN }}" -p "{{ secrets.DOCKERHUB_PASSWORD }}"
+          echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_LOGIN }} --password-stdin
 
       - name: Build docker images with docker compose
         run: |
