@@ -11,23 +11,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      steps:
-        - uses: actions/checkout@v3
-        - name: Set up node js
-          run: |
-            sudo apt install curl
-            sudo curl -fsSL https://deb.nodesource.com/setup_20.x | sudo bash -
-            sudo apt-get install -y nodejs
+      - uses: actions/checkout@v3
+      - name: Set up node js
+        run: |
+          sudo apt install curl
+          sudo curl -fsSL https://deb.nodesource.com/setup_20.x | sudo bash -
+          sudo apt-get install -y nodejs
 
-        - name: Build Cryptography Service
-          run: |
-            cd ./lab_work_5/src/cryptography-service  
-            npm i
-            npm run build
-            npm run prod
-        - name: Build File Storage Service
-          run: |
-            cd ./lab_work_5/src/file-storage-service
-            npm i
-            npm run build
-            npm run prod
+      - name: Build Cryptography Service
+        run: |
+          cd ./lab_work_5/src/cryptography-service  
+          npm i
+          npm run build
+          npm run prod
+      - name: Build File Storage Service
+        run: |
+          cd ./lab_work_5/src/file-storage-service
+          npm i
+          npm run build
+          npm run prod
