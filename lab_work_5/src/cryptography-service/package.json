@@ -1,0 +1,25 @@
+{
+  "name": "cryptography-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/server.js",
+  "scripts": {
+    "build": "tsc --project ./",
+    "dev": "nodemon --env-file=./src/.env ./build/server.js",
+    "prod": "node --env-file=./src/.env ./build/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "create-hash": "^1.2.0",
+    "express": "^4.21.2",
+    "express-async-errors": "^3.1.1"
+  },
+  "devDependencies": {
+    "@types/create-hash": "^1.2.6",
+    "@types/express": "^5.0.0",
+    "nodemon": "^3.1.9",
+    "typescript": "^5.8.2"
+  }
+}
