@@ -28,3 +28,23 @@ jobs:
           cd ./lab_work_5/src/file-storage-service
           npm i
           npm run build
+
+  push-images:
+    runs-on: ubuntu-latest
+    needs: build-services
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login to DockerHub
+        run: echo docker login -u "{{ secrets.DOCKERHUB_LOGIN }}" -p "{{ secrets.DOCKERHUB_PASSWORD }}"
+
+      - name: Build docker images with docker compose
+        run: |
+          cd ./lab_work_5/src
+          docker compose build --no-cache
+
+      - name: Push docker images to DockerHub
+        run: |
+          cd ./lab_work_5/src
+          docker compose push
