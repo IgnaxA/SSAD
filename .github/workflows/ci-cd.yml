@@ -1,0 +1,52 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ "*" ]
+
+jobs:
+  build-services:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up node js
+        run: |
+          sudo apt install curl
+          sudo curl -fsSL https://deb.nodesource.com/setup_20.x | sudo bash -
+          sudo apt-get install -y nodejs
+
+      - name: Build Cryptography Service
+        run: |
+          cd ./lab_work_5/src/cryptography-service  
+          npm i
+          npm run build
+      - name: Build File Storage Service
+        run: |
+          cd ./lab_work_5/src/file-storage-service
+          npm i
+          npm run build
+
+  push-images:
+    runs-on: ubuntu-latest
+    needs: build-services
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login to DockerHub
+        run: |
+          cd ./lab_work_5/src
+          echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_LOGIN }} --password-stdin
+
+      - name: Build docker images with docker compose
+        run: |
+          cd ./lab_work_5/src
+          docker compose build --no-cache
+
+      - name: Push docker images to DockerHub
+        run: |
+          cd ./lab_work_5/src
+          docker compose push

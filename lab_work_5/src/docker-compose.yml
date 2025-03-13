@@ -1,0 +1,47 @@
+
+networks:
+  app:
+    driver: bridge
+
+services:
+  file_storage_service_db:
+    image: postgres:latest
+    container_name: file_storage_service_db
+    env_file: ./file-storage-service/src/.env
+    environment:
+      - POSTGRES_USER=${DB_USER:-postgres}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-postgres}
+      - POSTGRES_DB=${DB_NAME:-file_storage_service_db}
+      - PG_PORT=5433
+    networks:
+      app:
+    ports:
+      - "5433:5433"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready", "--quiet" ]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+
+  file_storage_service:
+    image: ignaxa/file_storage_service:latest
+    container_name: file_storage_service
+    build:
+      context: ./file-storage-service
+    networks:
+      app:
+    depends_on:
+      file_storage_service_db:
+        condition: service_healthy
+    ports:
+      - "8082:8082"
+
+  cryptography_service:
+    image: ignaxa/cryptography_service:latest
+    container_name: cryptography_service
+    build:
+      context: ./cryptography-service
+    networks:
+      app:
+    ports:
+      - "8081:8081"
